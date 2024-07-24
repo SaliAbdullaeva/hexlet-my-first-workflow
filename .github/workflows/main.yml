@@ -1,0 +1,20 @@
+name: Say Hello Workflow
+
+on: [push]
+
+jobs:
+  say-hello-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run say-hello
+        run: make say-hello
+      # экшен — выполняет какую-то задачу
+      # checkout — клонирует репозиторий
+      - uses: actions/checkout@v3
+      # run – произвольная bash-команда
+      # ls -la выведет содержимое текущего репозитория
+      - run: ls -la
