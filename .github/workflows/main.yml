@@ -12,9 +12,27 @@ jobs:
 
       - name: Run say-hello
         run: make say-hello
-      # экшен — выполняет какую-то задачу
-      # checkout — клонирует репозиторий
-      - uses: actions/checkout@v3
-      # run – произвольная bash-команда
-      # ls -la выведет содержимое текущего репозитория
-      - run: ls -la
+
+      - name: List directory contents
+        run: ls -la
+
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js with caching
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
