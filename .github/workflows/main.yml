@@ -1,4 +1,4 @@
-name: Say Hello Workflow
+name: Combined Workflow
 
 on: [push]
 
@@ -12,27 +12,20 @@ jobs:
 
       - name: Run say-hello
         run: make say-hello
-      # экшен — выполняет какую-то задачу
-      # checkout — клонирует репозиторий
-      - uses: actions/checkout@v3
-      # run – произвольная bash-команда
-      # ls -la выведет содержимое текущего репозитория
-      - run: ls -la
 
-name: Example workflow for Node using Snyk
+      # Checkout repository again (this seems unnecessary but left as per your example)
+      - name: Checkout repository again
+        uses: actions/checkout@v3
 
-on:
-  push:
-    branches:
-      - main  # замените на вашу основную ветку, если это нужно
+      # List files in repository
+      - name: List files
+        run: ls -la
 
-jobs:
   security:
     runs-on: ubuntu-latest
-          
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@master
+      - uses: actions/checkout@master
 
       - name: Set up Node.js with caching
         uses: actions/setup-node@v2
@@ -42,10 +35,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-            
+
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      
