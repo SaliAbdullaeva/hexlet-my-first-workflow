@@ -8,16 +8,14 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4  # Обновлено до v4
 
       - name: Run say-hello
         run: make say-hello
 
-      # Checkout repository again (this seems unnecessary but left as per your example)
       - name: Checkout repository again
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Обновлено до v4
 
-      # List files in repository
       - name: List files
         run: ls -la
 
@@ -25,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4  # Обновлено до v4
 
       - name: Set up Node.js with caching
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3  # Обновлено до v3
         with:
           node-version: '14'
           cache: 'npm'
@@ -40,3 +38,11 @@ jobs:
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Check for dependencies lock file
+        run: |
+          if [ ! -f package-lock.json ] && [ ! -f yarn.lock ]; then
+            echo "Dependencies lock file is not found"
+            exit 1
+          fi
+
