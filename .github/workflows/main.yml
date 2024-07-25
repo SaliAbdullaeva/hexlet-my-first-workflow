@@ -18,8 +18,7 @@ jobs:
       # run – произвольная bash-команда
       # ls -la выведет содержимое текущего репозитория
       - run: ls -la
-      
-name: Example workflow for Node using Snyk
+
 
 on:
   push:
