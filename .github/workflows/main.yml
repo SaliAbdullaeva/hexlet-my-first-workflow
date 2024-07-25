@@ -19,26 +19,24 @@ jobs:
       # ls -la выведет содержимое текущего репозитория
       - run: ls -la
       
-      name: Example workflow for Node using Snyk
-      on: push
-      jobs:
-        security:
-          runs-on: ubuntu-latest
+    
+  security:
+    runs-on: ubuntu-latest
           
-          steps:
-            - uses: actions/checkout@master
+    steps:
+    - uses: actions/checkout@master
 
-            - name: Set up Node.js with caching
-              uses: actions/setup-node@v2
-              with:
-                node-version: '14'
-                cache: 'npm'
+    - name: Set up Node.js with caching
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        cache: 'npm'
 
-            - name: Install dependencies
-              run: npm install
+    - name: Install dependencies
+      run: npm install
             
-            - name: Run Snyk to check for vulnerabilities
-              uses: snyk/actions/node@master
-              env:
-                SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       
