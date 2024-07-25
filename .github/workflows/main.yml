@@ -20,26 +20,32 @@ jobs:
       - run: ls -la
       
 name: Example workflow for Node using Snyk
-on: push
-jobs:  
+
+on:
+  push:
+    branches:
+      - main  # замените на вашу основную ветку, если это нужно
+
+jobs:
   security:
     runs-on: ubuntu-latest
           
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@master
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js with caching
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-        cache: 'npm'
+      - name: Set up Node.js with caching
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
             
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/node@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
       
