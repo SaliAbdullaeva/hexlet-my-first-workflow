@@ -19,6 +19,7 @@ jobs:
       # ls -la выведет содержимое текущего репозитория
       - run: ls -la
 
+name: Example workflow for Node using Snyk
 
 on:
   push:
@@ -31,7 +32,7 @@ jobs:
           
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
 
       - name: Set up Node.js with caching
         uses: actions/setup-node@v2
